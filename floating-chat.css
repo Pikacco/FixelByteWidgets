@@ -1,5 +1,4 @@
-/* public/floating-chat.css */
-
+/* Container */
 #floating-chat-container {
   position: fixed;
   bottom: 20px;
@@ -7,115 +6,157 @@
   z-index: 999999;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  font-family: sans-serif;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.3s ease-in-out;
 }
 
+/* Floating Button */
 #floating-chat-button {
-  width: 56px;
-  height: 56px;
-  background-color: #2563eb; /* blue-600 */
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg,#2563eb,#3b82f6);
   color: white;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
   cursor: pointer;
   border: none;
+  font-size: 24px;
+  transition: transform 0.2s ease;
 }
-
 #floating-chat-button:hover {
-  background-color: #1d4ed8; /* blue-700 */
+  transform: scale(1.1);
 }
 
+/* Chat Box */
 #floating-chat-box {
-  width: 320px;
-  height: 480px;
+  width: 350px;
+  max-width: 90vw;
+  height: 500px; /* sabit */
+  max-height: 80vh;
   background: white;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  border-radius: 15px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   margin-bottom: 8px;
 }
 
+
+/* Header */
 #floating-chat-header {
+  flex-shrink: 0; /* sabit qalsın */
   background: #2563eb;
   color: white;
-  padding: 8px;
+  padding: 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-weight: 600;
+  font-size: 16px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-
-#floating-chat-sidebar {
-  width: 80px;
-  border-right: 1px solid #e5e7eb; /* gray-200 */
-  background: #f9fafb; /* gray-50 */
-  overflow-y: auto;
-  flex-shrink: 0;
-}
-
-#floating-chat-sidebar div {
-  padding: 8px;
+#floating-chat-header button {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 20px;
   cursor: pointer;
-  margin-bottom: 4px;
-  border-radius: 6px;
 }
 
-#floating-chat-sidebar div.selected {
-  background: #bfdbfe; /* blue-100 */
-}
-
+/* Chat Window */
 #floating-chat-window {
   flex: 1;
   display: flex;
   flex-direction: column;
   background: #f9fafb;
-  padding: 8px;
+  padding: 10px;
   overflow: hidden;
 }
 
+/* Messages */
 #floating-chat-messages {
   flex: 1;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
+  padding-right: 4px;
+  scroll-behavior: smooth; /* scroll daha rahat getsin */
 }
 
-.message-bubble {
-  padding: 4px 8px;
-  border-radius: 8px;
-  max-width: 75%;
-  word-break: break-word;
-}
-
-.message-bubble.user {
-  background-color: #2563eb;
-  color: white;
-  margin-left: auto;
-}
-
-.message-bubble.ai {
-  background-color: #e5e7eb;
-  color: #111827;
-  margin-right: auto;
-}
-
+/* Input Area */
 #floating-chat-input {
   display: flex;
-  gap: 4px;
+  gap: 8px;
   border-top: 1px solid #e5e7eb;
-  padding: 4px;
+  padding: 6px;
+  align-items: flex-end;
+  background: #ffffff;
+  position: sticky;
+  bottom: 0; /* input həmişə görünür */
+  z-index: 10;
 }
 
+/* Textarea auto resize */
 #floating-chat-input textarea {
   flex: 1;
   resize: none;
-  border: 1px solid #d1d5db; /* gray-300 */
-  border-radius: 6px;
-  padding: 4px;
+  border: 1px solid #d1d5db;
+  border-radius: 20px;
+  padding: 8px 12px;
+  font-size: 14px;
+  overflow-y: auto;
+  max-height: 100px; /* böyük mesajlarda scroll */
+}
+
+
+#floating-chat-input button {
+  background: #2563eb;
+  color: white;
+  border-radius: 50%;
+  border: none;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 16px;
+}
+#floating-chat-input button:hover {
+  background: #3b82f6;
+}
+
+/* Message Bubbles */
+.message-bubble {
+  padding: 8px 12px;
+  border-radius: 20px;
+  max-width: 75%;
+  word-break: break-word;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  font-size: 14px;
+}
+.message-bubble.user {
+  background: #2563eb;
+  color: white;
+  align-self: flex-end;
+}
+.message-bubble.ai {
+  background: #e5e7eb;
+  color: #111827;
+  align-self: flex-start;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  #floating-chat-box {
+    width: 90vw;
+    height: 70vh;
+    bottom: 10px;
+    right: 5%;
+  }
 }
