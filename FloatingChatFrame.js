@@ -8,11 +8,12 @@
     const scrollRef = useRef(null);
 
     const conversations = [
-      { id: 1, name: "Support", lastMessage: "Salam!" },
-      { id: 2, name: "Sales", lastMessage: "Qiymətləri soruşmaq istəyirəm" },
-      { id: 3, name: "General", lastMessage: "Salam, necəsiz?" },
+      { id: 1, name: "Support", lastMessage: "Salam!", slug: "support" },
+      { id: 2, name: "Sales", lastMessage: "Qiymətləri soruşmaq istəyirəm", slug: "sales" },
+      { id: 3, name: "General", lastMessage: "Salam, necəsiz?", slug: "general" },
     ];
 
+    // Avtomatik scroll
     useEffect(() => {
       if (scrollRef.current) {
         scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -28,8 +29,21 @@
 
     const handleSend = (text) => {
       if (!text.trim()) return;
+
+      const payload = {
+        message: text,
+        roomSlug: selectedRoom ? selectedRoom.slug : null,
+      };
+      console.log("Send to backend:", payload);
+
       setMessages([...messages, { id: messages.length + 1, text, sender: "user" }]);
     };
+
+    const quickMessages = [
+      { id: 1, text: "Mənə dəstək lazımdır", room: conversations[0] },
+      { id: 2, text: "Qiymətləri soruşmaq istəyirəm", room: conversations[1] },
+      { id: 3, text: "Ümumi sualım var", room: conversations[2] },
+    ];
 
     return React.createElement(
       "div",
@@ -50,37 +64,16 @@
             ),
             React.createElement(
               "div",
-              { style: { display: "flex", flex: 1 } },
+              { id: "floating-chat-window", style: { display: "flex", flex: 1, flexDirection: "column" } },
               React.createElement(
                 "div",
-                { id: "floating-chat-sidebar" },
-                conversations.map((room) =>
-                  React.createElement(
-                    "div",
-                    {
-                      key: room.id,
-                      className: selectedRoom?.id === room.id ? "selected" : "",
-                      onClick: () => handleSelectRoom(room)
-                    },
-                    React.createElement("p", null, room.name),
-                    React.createElement("p", null, room.lastMessage)
-                  )
-                )
-              ),
-              React.createElement(
-                "div",
-                { id: "floating-chat-window" },
-                React.createElement(
-                  "div",
-                  { id: "floating-chat-messages", ref: scrollRef },
-                  messages.length
+                { id: "floating-chat-messages", ref: scrollRef },
+                selectedRoom
+                  ? messages.length
                     ? messages.map((msg) =>
                         React.createElement(
                           "div",
-                          {
-                            key: msg.id,
-                            className: "message-bubble " + msg.sender
-                          },
+                          { key: msg.id, className: "message-bubble " + msg.sender },
                           msg.text
                         )
                       )
@@ -89,10 +82,20 @@
                         { style: { textAlign: "center", color: "#9CA3AF" } },
                         "No messages yet."
                       )
-                ),
-                selectedRoom &&
-                  React.createElement(ChatInput, { onSend: handleSend })
-              )
+                  : quickMessages.map((qm) =>
+                      React.createElement(
+                        "div",
+                        {
+                          key: qm.id,
+                          className: "quick-message",
+                          style: { cursor: "pointer", padding: "8px", borderRadius: "8px", background: "#f1f5f9", marginBottom: "6px" },
+                          onClick: () => handleSelectRoom(qm.room)
+                        },
+                        qm.text
+                      )
+                    )
+              ),
+              selectedRoom && React.createElement(ChatInput, { onSend: handleSend })
             )
           )
         : React.createElement(
@@ -106,9 +109,11 @@
   function ChatInput({ onSend }) {
     const [value, setValue] = useState("");
     const handleSend = () => {
+      if (!value.trim()) return;
       onSend(value);
       setValue("");
     };
+
     return React.createElement(
       "div",
       { id: "floating-chat-input" },
@@ -117,7 +122,12 @@
         value,
         placeholder: "Mesajınızı yazın...",
         onChange: (e) => setValue(e.target.value),
-        onKeyDown: (e) => { if(e.key==="Enter"&&!e.shiftKey){ e.preventDefault(); handleSend(); } }
+        onKeyDown: (e) => {
+          if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            handleSend();
+          }
+        }
       }),
       React.createElement(
         "button",
