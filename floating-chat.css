@@ -1,0 +1,121 @@
+/* public/floating-chat.css */
+
+#floating-chat-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-family: sans-serif;
+}
+
+#floating-chat-button {
+  width: 56px;
+  height: 56px;
+  background-color: #2563eb; /* blue-600 */
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  cursor: pointer;
+  border: none;
+}
+
+#floating-chat-button:hover {
+  background-color: #1d4ed8; /* blue-700 */
+}
+
+#floating-chat-box {
+  width: 320px;
+  height: 480px;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+#floating-chat-header {
+  background: #2563eb;
+  color: white;
+  padding: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#floating-chat-sidebar {
+  width: 80px;
+  border-right: 1px solid #e5e7eb; /* gray-200 */
+  background: #f9fafb; /* gray-50 */
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+#floating-chat-sidebar div {
+  padding: 8px;
+  cursor: pointer;
+  margin-bottom: 4px;
+  border-radius: 6px;
+}
+
+#floating-chat-sidebar div.selected {
+  background: #bfdbfe; /* blue-100 */
+}
+
+#floating-chat-window {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #f9fafb;
+  padding: 8px;
+  overflow: hidden;
+}
+
+#floating-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.message-bubble {
+  padding: 4px 8px;
+  border-radius: 8px;
+  max-width: 75%;
+  word-break: break-word;
+}
+
+.message-bubble.user {
+  background-color: #2563eb;
+  color: white;
+  margin-left: auto;
+}
+
+.message-bubble.ai {
+  background-color: #e5e7eb;
+  color: #111827;
+  margin-right: auto;
+}
+
+#floating-chat-input {
+  display: flex;
+  gap: 4px;
+  border-top: 1px solid #e5e7eb;
+  padding: 4px;
+}
+
+#floating-chat-input textarea {
+  flex: 1;
+  resize: none;
+  border: 1px solid #d1d5db; /* gray-300 */
+  border-radius: 6px;
+  padding: 4px;
+}
