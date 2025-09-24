@@ -19,10 +19,10 @@
   doc.write(`
   <html>
     <head>
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/<username>/<repo>@main/floating-chat.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Pikacco/FixelByteWidgets@main/floating-chat.css">
       <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
       <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/gh/<username>/<repo>@main/FloatingChatFrame.js"></script>
+      <script src="https://cdn.jsdelivr.net/gh/Pikacco/FixelByteWidgets@main/FloatingChatFrame.js"></script>
     </head>
     <body style="margin:0">
       <div id="root"></div>
@@ -36,3 +36,4 @@
 `);
   doc.close();
 })();
+
